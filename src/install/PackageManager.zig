@@ -791,7 +791,7 @@ pub fn init(
     try env.load(entries_option.entries, &[_][]u8{}, .production, false);
 
     initializeStore();
-    if (bun.getenvZ("XDG_CONFIG_HOME") orelse bun.getenvZ(bun.DotEnv.home_env)) |data_dir| {
+    if (bun.env_var.xdg_config_home.platformGet() orelse bun.env_var.home.get()) |data_dir| {
         var buf: bun.PathBuffer = undefined;
         var parts = [_]string{
             "./.npmrc",
@@ -831,7 +831,7 @@ pub fn init(
         bun.spawn.process.WaiterThread.setShouldUseWaiterThread();
     }
 
-    if (bun.getRuntimeFeatureFlag(.BUN_FEATURE_FLAG_FORCE_WINDOWS_JUNCTIONS)) {
+    if (bun.feature_flag.force_windows_junctions.get()) {
         bun.sys.WindowsSymlinkOptions.has_failed_to_create_symlink = true;
     }
 

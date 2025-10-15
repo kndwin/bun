@@ -12,6 +12,11 @@ test("5961", async () => {
   const stdout = await result.stdout.text();
   const stderr = await result.stderr.text();
 
+  console.log("=== SUBPROCESS STDERR ===");
+  console.log(stderr);
+  console.log("=== SUBPROCESS STDOUT ===");
+  console.log(stdout);
+
   expect(normalizeBunSnapshot(stdout)).toMatchInlineSnapshot(`
     "bun test <version> (<revision>)
     hi!"

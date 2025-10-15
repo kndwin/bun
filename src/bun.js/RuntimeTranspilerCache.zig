@@ -382,10 +382,10 @@ pub const RuntimeTranspilerCache = struct {
 
     fn reallyGetCacheDir(buf: *bun.PathBuffer) [:0]const u8 {
         if (comptime bun.Environment.isDebug) {
-            bun_debug_restore_from_cache = bun.getenvZ("BUN_DEBUG_ENABLE_RESTORE_FROM_TRANSPILER_CACHE") != null;
+            bun_debug_restore_from_cache = bun.env_var.bun_debug_enable_restore_from_transpiler_cache.get();
         }
 
-        if (bun.getenvZ("BUN_RUNTIME_TRANSPILER_CACHE_PATH")) |dir| {
+        if (bun.env_var.bun_runtime_transpiler_cache_path.get()) |dir| {
             if (dir.len == 0 or (dir.len == 1 and dir[0] == '0')) {
                 return "";
             }
@@ -396,7 +396,7 @@ pub const RuntimeTranspilerCache = struct {
             return buf[0..len :0];
         }
 
-        if (bun.getenvZ("XDG_CACHE_HOME")) |dir| {
+        if (bun.env_var.xdg_cache_home.platformGet()) |dir| {
             const parts = &[_][]const u8{ dir, "bun", "@t@" };
             return bun.fs.FileSystem.instance.absBufZ(parts, buf);
         }
@@ -404,7 +404,7 @@ pub const RuntimeTranspilerCache = struct {
         if (comptime bun.Environment.isMac) {
             // On a mac, default to ~/Library/Caches/bun/*
             // This is different than ~/.bun/install/cache, and not configurable by the user.
-            if (bun.getenvZ("HOME")) |home| {
+            if (bun.env_var.home.get()) |home| {
                 const parts = &[_][]const u8{
                     home,
                     "Library/",
@@ -416,7 +416,7 @@ pub const RuntimeTranspilerCache = struct {
             }
         }
 
-        if (bun.getenvZ(bun.DotEnv.home_env)) |dir| {
+        if (bun.env_var.home.get()) |dir| {
             const parts = &[_][]const u8{ dir, ".bun", "install", "cache", "@t@" };
             return bun.fs.FileSystem.instance.absBufZ(parts, buf);
         }
