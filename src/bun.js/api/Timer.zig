@@ -629,4 +629,3 @@ const jsc = bun.jsc;
 const JSGlobalObject = jsc.JSGlobalObject;
 const JSValue = jsc.JSValue;
 const VirtualMachine = jsc.VirtualMachine;
-const debug = bun.Output.scoped(.Timer, .visible);
