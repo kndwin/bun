@@ -53,13 +53,14 @@ pub const SysTmpDir = bun.Environment.OsTypeSelect(.{
 pub const win32 = @import("./win32.zig");
 pub const posix = @import("./posix.zig");
 
-const bun = @import("bun");
-const std = @import("std");
 comptime {
     // TODO(markovejnovic): This probably shouldn't exist in src/os, but rather in another spot.
     if (bun.Environment.isPosix) {
         // uvinterop only supports POSIX at the time of writing. No need to pollute the Windows
         // binary with it.
-        _ = @import("uvinterop.zig"); // Necessary to link into the binary.
+        _ = @import("./uvinterop.zig"); // Necessary to link into the binary.
     }
 }
+
+const bun = @import("bun");
+const std = @import("std");

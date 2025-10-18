@@ -47,5 +47,4 @@ pub export fn bunuv__os_homedir(buffer: ?[*]u8, size: ?*usize) callconv(.C) c_in
 }
 
 const bun = @import("bun");
-const std = @import("std");
 const libuv = @import("../deps/libuv.zig");

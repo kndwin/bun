@@ -730,7 +730,6 @@ const std = @import("std");
 
 const bun = @import("bun");
 const DotEnv = bun.DotEnv;
-const Environment = bun.Environment;
 const FD = bun.FD;
 const OOM = bun.OOM;
 const Output = bun.Output;

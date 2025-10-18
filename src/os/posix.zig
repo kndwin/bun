@@ -243,7 +243,6 @@ pub const SysTmpDir = if (bun.Environment.isPosix) struct {
         _ = allocator; // Never allocates, used for conformance to
         return .initResult(.{});
     }
-
 } else struct {};
 
 const bun = @import("bun");

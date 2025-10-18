@@ -254,7 +254,7 @@ pub const TempDir = if (bun.Environment.isWindows) struct {
             .unmanaged => {},
             .managed => |*m| {
                 m.allocator.free(m.buf);
-            }
+            },
         }
     }
 
@@ -308,7 +308,7 @@ pub const TempDir = if (bun.Environment.isWindows) struct {
                         error.OutOfMemory => return .initErr(.fromCode(.NOMEM, .GetTempPath2)),
                     }
                 },
-            } }});
+            } } });
         }
 
         var win_dir = WinDir.query(allocator);
@@ -321,13 +321,12 @@ pub const TempDir = if (bun.Environment.isWindows) struct {
                         error.OutOfMemory => return .initErr(.fromCode(.NOMEM, .GetTempPath2)),
                     }
                 },
-            } }});
+            } } });
         }
 
-        return .initErr(
-            user_profile.asErr() orelse
-                win_dir.asErr() orelse
-                .fromCode(.UNKNOWN, .GetTempPath2));
+        return .initErr(user_profile.asErr() orelse
+            win_dir.asErr() orelse
+            .fromCode(.UNKNOWN, .GetTempPath2));
     }
 } else struct {};
 
